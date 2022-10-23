@@ -19,8 +19,7 @@
         <h2>Significant earthquakes in 2015</h2>
         <label id="month"></label>
         <input id="slider" type="range" min="0" max="11" step="1" value="0">
-        <button type="button" id="start">start/stop</button>
-        <button type="button" id="stop">stop</button>
+        <button type="button" id="play" class="play-button"></button>
     </div>
     <div class="map-overlay-inner">
         <div id="legend" class="legend">
@@ -151,19 +150,22 @@
     }
     // Code copied from https://stackoverflow.com/a/34935566
     let myTimer;
-    d3.select("#start").on("click", function() {
-        clearInterval (myTimer);
-        myTimer = setInterval (function() {
-            let b = d3.select("#slider");
-            let t = (+b.property("value") + 1) % (+b.property("max") + 1);
-            if (t == 0) { t = +b.property("min"); }
-            b.property("value", t);
-            document.getElementById('slider').dispatchEvent(new Event('input'));
-        }, 1000);
-    });
-
-    d3.select("#stop").on("click", function() {
-        clearInterval (myTimer);
+    let play_state = false;
+    d3.select("#play").on("click", function() {
+        if (!play_state) {
+            clearInterval (myTimer);
+            myTimer = setInterval (function() {
+                let b = d3.select("#slider");
+                let t = (+b.property("value") + 1) % (+b.property("max") + 1);
+                if (t == 0) { t = +b.property("min"); }
+                b.property("value", t);
+                document.getElementById('slider').dispatchEvent(new Event('input'));
+            }, 500);            
+        } else {
+            clearInterval (myTimer);
+        }
+        play_state = !play_state;
+        document.getElementById('play').classList.toggle("paused");
     });
 </script>
 

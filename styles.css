@@ -38,3 +38,15 @@ body { margin: 0; padding: 0; }
     margin: 0;
     cursor: ew-resize;
 }
+.play-button {
+  display: block;
+  width: 30px;
+  height: 30px;
+  border:0px;
+  transition: 100ms all ease;
+  background: url(assets/svg/svg-play-button-icon-1.svg);
+}
+.play-button.paused {
+    background: url(assets/svg/svg-pause-button-icon-1.svg);
+}
+
